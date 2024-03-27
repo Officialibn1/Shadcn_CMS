@@ -7,19 +7,25 @@ import {
 	ArchiveX,
 	File,
 	Inbox,
+	LayoutDashboard,
+	LogOut,
+	MailIcon,
 	MessagesSquare,
 	Search,
 	Send,
+	Settings,
 	ShoppingCart,
 	Trash2,
+	User,
 	Users2,
+	UsersRound,
 } from "lucide-react";
 import { Nav } from "./ui/nav";
 
 type Props = {};
 
 function SideBar({}: Props) {
-	const [isCollapsed, setisCollapsed] = useState(false);
+	const [isCollapsed, setisCollapsed] = useState(true);
 
 	const toggleNavbarCollapseState = () => {
 		setisCollapsed(!isCollapsed);
@@ -30,40 +36,53 @@ function SideBar({}: Props) {
 				isCollapsed={isCollapsed}
 				links={[
 					{
-						title: "Inbox",
-						label: "128",
-						icon: Inbox,
+						title: "Dashboard",
+						label: "",
+						icon: LayoutDashboard,
 						variant: "default",
+						href: "#",
 					},
 					{
-						title: "Drafts",
-						label: "9",
-						icon: File,
-						variant: "ghost",
-					},
-					{
-						title: "Sent",
+						title: "Users",
 						label: "",
-						icon: Send,
+						icon: UsersRound,
 						variant: "ghost",
+						href: "#",
 					},
 					{
-						title: "Junk",
+						title: "Mial",
 						label: "23",
-						icon: ArchiveX,
+						icon: MailIcon,
 						variant: "ghost",
+						href: "#",
 					},
 					{
-						title: "Trash",
+						title: "Inventory",
 						label: "",
-						icon: Trash2,
+						icon: ShoppingCart,
 						variant: "ghost",
+						href: "#",
 					},
 					{
-						title: "Archive",
+						title: "Settings",
 						label: "",
-						icon: Archive,
+						icon: Settings,
 						variant: "ghost",
+						href: "#",
+					},
+					{
+						title: "My Profile",
+						label: "",
+						icon: User,
+						variant: "ghost",
+						href: "#",
+					},
+					{
+						title: "Logout",
+						label: "",
+						icon: LogOut,
+						variant: "destructive",
+						href: "#",
 					},
 				]}
 			/>
