@@ -27,3 +27,59 @@ export const dashboardAnalyticsCardData: AnalyticCardProps[] = [
 		description: "+18.3% from last month",
 	},
 ];
+
+type DahsboardbarChartData = {
+	name: string;
+	value: number;
+};
+
+export const dahsboardbarChartData: DahsboardbarChartData[] = [
+	{
+		name: "Jan",
+		value: Math.floor(Math.random() * 500) + 500,
+	},
+	{
+		name: "Feb",
+		value: Math.floor(Math.random() * 500) + 700,
+	},
+	{
+		name: "Mar",
+		value: Math.floor(Math.random() * 500) + 200,
+	},
+	{
+		name: "Apr",
+		value: Math.floor(Math.random() * 500) + 800,
+	},
+	{
+		name: "May",
+		value: Math.floor(Math.random() * 500) + 1000,
+	},
+	{
+		name: "Jun",
+		value: Math.floor(Math.random() * 500) + 100,
+	},
+	{
+		name: "Jul",
+		value: Math.floor(Math.random() * 500) + 650,
+	},
+	{
+		name: "Aug",
+		value: Math.floor(Math.random() * 500) + 500,
+	},
+	{
+		name: "Sep",
+		value: Math.floor(Math.random() * 500) + 490,
+	},
+	{
+		name: "Oct",
+		value: Math.floor(Math.random() * 500) + 960,
+	},
+	{
+		name: "Nov",
+		value: Math.floor(Math.random() * 500) + 347,
+	},
+	{
+		name: "Dec",
+		value: Math.floor(Math.random() * 500) + 653,
+	},
+];
