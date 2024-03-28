@@ -14,7 +14,7 @@ export default function RootLayout({
 	return (
 		<div className='min-h-screen, w-full flex'>
 			<SideBar />
-			<div className='w-full p-8'>{children}</div>
+			<div className='w-full p-4'>{children}</div>
 		</div>
 	);
 }
