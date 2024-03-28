@@ -1,16 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { LucideIcon } from "lucide-react";
+import { LogOut, LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { usePathname } from "next/navigation";
+import { useWindowWidth } from "@react-hook/window-size";
 
 interface NavProps {
 	isCollapsed: boolean;
@@ -24,12 +26,14 @@ interface NavProps {
 }
 
 export function Nav({ links, isCollapsed }: NavProps) {
+	const pathName = usePathname();
+
 	return (
 		<TooltipProvider>
 			<div
 				data-collapsed={isCollapsed}
-				className='group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2'>
-				<nav className='grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2'>
+				className='group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2 h-[100%]'>
+				<nav className=' grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2'>
 					{links.map((link, index) =>
 						isCollapsed ? (
 							<Tooltip
@@ -37,10 +41,13 @@ export function Nav({ links, isCollapsed }: NavProps) {
 								delayDuration={0}>
 								<TooltipTrigger asChild>
 									<Link
-										href='#'
+										href={link.href}
 										className={cn(
-											buttonVariants({ variant: link.variant, size: "icon" }),
-											"h-9 w-9",
+											buttonVariants({
+												variant: pathName === link.href ? "default" : "ghost",
+												size: "icon",
+											}),
+											"h-9 w-9 my-2",
 											link.variant === "default" &&
 												"dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
 										)}>
@@ -58,15 +65,19 @@ export function Nav({ links, isCollapsed }: NavProps) {
 						) : (
 							<Link
 								key={index}
-								href='#'
+								href={link.href}
 								className={cn(
-									buttonVariants({ variant: link.variant, size: "sm" }),
+									"my-2",
+									buttonVariants({
+										variant: pathName === link.href ? "default" : "ghost",
+										size: "default",
+									}),
 									link.variant === "default" &&
 										"dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
 									"justify-start",
 								)}>
 								<link.icon className='mr-2 h-4 w-4' />
-								{link.title}
+								<span className='text-base font-light'>{link.title}</span>
 								{link.label && (
 									<span
 										className={cn(
@@ -78,6 +89,41 @@ export function Nav({ links, isCollapsed }: NavProps) {
 								)}
 							</Link>
 						),
+					)}
+					{isCollapsed ? (
+						<Tooltip delayDuration={0}>
+							<TooltipTrigger asChild>
+								<Link
+									href='#'
+									className={cn(
+										buttonVariants({ variant: "destructive", size: "icon" }),
+										"h-9 w-9 mt-40",
+										links[0].variant !== "default" &&
+											"dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
+									)}>
+									<LogOut className='h-4 w-4' />
+									<span className='sr-only'>{"Logout"}</span>
+								</Link>
+							</TooltipTrigger>
+							<TooltipContent
+								side='right'
+								className='flex items-center gap-4 bg-destructive'>
+								{"LogOut"}
+							</TooltipContent>
+						</Tooltip>
+					) : (
+						<Link
+							href='#'
+							className={cn(
+								"my-2 mt-40",
+								buttonVariants({ variant: "destructive", size: "default" }),
+								links[0].variant !== "default" &&
+									"dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
+								"justify-start",
+							)}>
+							<LogOut className='mr-2 h-4 w-4' />
+							<span className='text-base font-light'>{"LogOut"}</span>
+						</Link>
 					)}
 				</nav>
 			</div>

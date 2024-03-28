@@ -5,6 +5,7 @@ import {
 	AlertCircle,
 	Archive,
 	ArchiveX,
+	ChevronLeft,
 	File,
 	Inbox,
 	LayoutDashboard,
@@ -21,69 +22,83 @@ import {
 	UsersRound,
 } from "lucide-react";
 import { Nav } from "./ui/nav";
+import { Button } from "./ui/button";
+import { useWindowWidth } from "@react-hook/window-size";
 
 type Props = {};
 
 function SideBar({}: Props) {
-	const [isCollapsed, setisCollapsed] = useState(true);
+	const [isCollapsed, setisCollapsed] = useState(false);
+
+	const screenWidth = useWindowWidth();
+
+	const isSmallScreenView = screenWidth < 769;
 
 	const toggleNavbarCollapseState = () => {
 		setisCollapsed(!isCollapsed);
 	};
 	return (
-		<div>
+		<div className='border border-l-3 px-2 py-5 pt-10 md:pt-24 min-h-screen relative'>
+			{!isSmallScreenView && (
+				<Button
+					onClick={toggleNavbarCollapseState}
+					variant={"secondary"}
+					className='rounded-full p-2 absolute top-8 -right-5 hover:opacity-85'>
+					<ChevronLeft />
+				</Button>
+			)}
 			<Nav
-				isCollapsed={isCollapsed}
+				isCollapsed={isSmallScreenView ? true : isCollapsed}
 				links={[
 					{
 						title: "Dashboard",
 						label: "",
 						icon: LayoutDashboard,
 						variant: "default",
-						href: "#",
+						href: "/dashboard",
 					},
 					{
 						title: "Users",
 						label: "",
 						icon: UsersRound,
 						variant: "ghost",
-						href: "#",
+						href: "/dashboard/users",
 					},
 					{
 						title: "Mial",
 						label: "23",
 						icon: MailIcon,
 						variant: "ghost",
-						href: "#",
+						href: "/dashboard/mails",
 					},
 					{
 						title: "Inventory",
 						label: "",
 						icon: ShoppingCart,
 						variant: "ghost",
-						href: "#",
+						href: "/dashboard/inventory",
 					},
 					{
 						title: "Settings",
 						label: "",
 						icon: Settings,
 						variant: "ghost",
-						href: "#",
+						href: "/dashboard/settings",
 					},
 					{
 						title: "My Profile",
 						label: "",
 						icon: User,
 						variant: "ghost",
-						href: "#",
+						href: "/dashboard/profile",
 					},
-					{
-						title: "Logout",
-						label: "",
-						icon: LogOut,
-						variant: "destructive",
-						href: "#",
-					},
+					// {
+					// 	title: "Logout",
+					// 	label: "",
+					// 	icon: LogOut,
+					// 	variant: "destructive",
+					// 	href: "#",
+					// },
 				]}
 			/>
 		</div>
