@@ -2,7 +2,11 @@ import PageHeader from "@/components/PageHeader";
 import AnalyticsCard from "@/components/ui/AnalyticsCard";
 import DashboardBarChart from "@/components/ui/DashboardBarChart";
 import DashboardComponentsContainer from "@/components/ui/DashboardComponentsContainer";
-import { dashboardAnalyticsCardData } from "@/lib/dummyData";
+import DashboardOrderCard from "@/components/ui/DashboardOrderCard";
+import {
+	dashboardAnalyticsCardData,
+	dashboardRecentOrdersData,
+} from "@/lib/dummyData";
 import Image from "next/image";
 
 export default function Home() {
@@ -32,6 +36,15 @@ export default function Home() {
 						<p className='text-sm font-light text-slate-500'>
 							You have 46 new orders to be approved
 						</p>
+					</div>
+
+					<div className='flex flex-col gap-1 max-h-[420px] overflow-y-auto '>
+						{dashboardRecentOrdersData.map((order, i) => (
+							<DashboardOrderCard
+								cardData={order}
+								key={i}
+							/>
+						))}
 					</div>
 				</DashboardComponentsContainer>
 			</section>

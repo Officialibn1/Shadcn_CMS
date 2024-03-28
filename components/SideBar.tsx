@@ -2,23 +2,12 @@
 import React, { useState } from "react";
 
 import {
-	AlertCircle,
-	Archive,
-	ArchiveX,
 	ChevronLeft,
-	File,
-	Inbox,
 	LayoutDashboard,
-	LogOut,
 	MailIcon,
-	MessagesSquare,
-	Search,
-	Send,
 	Settings,
 	ShoppingCart,
-	Trash2,
 	User,
-	Users2,
 	UsersRound,
 } from "lucide-react";
 import { Nav } from "./ui/nav";

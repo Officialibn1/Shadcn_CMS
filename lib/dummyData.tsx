@@ -83,3 +83,103 @@ export const dahsboardbarChartData: DahsboardbarChartData[] = [
 		value: Math.floor(Math.random() * 500) + 653,
 	},
 ];
+
+export type DashboardRecentOrdersData = {
+	imgUrl: string;
+	name: string;
+	email: string;
+	amount: string;
+};
+
+export const dashboardRecentOrdersData: DashboardRecentOrdersData[] = [
+	{
+		imgUrl: "/avatars/01.png",
+		name: "Sarah Queen",
+		email: "sarahqueen@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/02.png",
+		name: "John Doe",
+		email: "johndoe@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/03.png",
+		name: "Isah Ibn",
+		email: "isahibn@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/04.png",
+		name: "Allen Jr",
+		email: "allenjr@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/05.png",
+		name: "Kate Woods",
+		email: "katewoods@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/01.png",
+		name: "Sarah Queen",
+		email: "sarahqueen@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/02.png",
+		name: "John Doe",
+		email: "johndoe@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/03.png",
+		name: "Isah Ibn",
+		email: "isahibn@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/04.png",
+		name: "Allen Jr",
+		email: "allenjr@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/05.png",
+		name: "Kate Woods",
+		email: "katewoods@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/01.png",
+		name: "Sarah Queen",
+		email: "sarahqueen@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/02.png",
+		name: "John Doe",
+		email: "johndoe@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/03.png",
+		name: "Isah Ibn",
+		email: "isahibn@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/04.png",
+		name: "Allen Jr",
+		email: "allenjr@shadcn.com",
+		amount: "+$34,598.00",
+	},
+	{
+		imgUrl: "/avatars/05.png",
+		name: "Kate Woods",
+		email: "katewoods@shadcn.com",
+		amount: "+$34,598.00",
+	},
+];

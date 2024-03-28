@@ -4,7 +4,7 @@ import Link from "next/link";
 import { LogOut, LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
 	Tooltip,
 	TooltipContent,
@@ -12,7 +12,6 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { usePathname } from "next/navigation";
-import { useWindowWidth } from "@react-hook/window-size";
 
 interface NavProps {
 	isCollapsed: boolean;
@@ -97,7 +96,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
 									href='#'
 									className={cn(
 										buttonVariants({ variant: "destructive", size: "icon" }),
-										"h-9 w-9 mt-40",
+										"h-9 w-9 mt-80",
 										links[0].variant !== "default" &&
 											"dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
 									)}>
@@ -115,7 +114,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
 						<Link
 							href='#'
 							className={cn(
-								"my-2 mt-40",
+								"my-2 mt-80",
 								buttonVariants({ variant: "destructive", size: "default" }),
 								links[0].variant !== "default" &&
 									"dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
