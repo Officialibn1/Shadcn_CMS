@@ -47,11 +47,11 @@ function SideBar({}: Props) {
 						href: "/dashboard",
 					},
 					{
-						title: "Users",
+						title: "Customers",
 						label: "",
 						icon: UsersRound,
 						variant: "ghost",
-						href: "/dashboard/users",
+						href: "/dashboard/customers",
 					},
 					{
 						title: "Mial",
