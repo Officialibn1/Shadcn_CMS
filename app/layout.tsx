@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import SideBar from "@/components/SideBar";
 import { Themeprovider } from "@/providers/theme_providers";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
 					enableSystem>
 					{children}
 				</Themeprovider>
+				<Toaster />
 			</body>
 		</html>
 	);

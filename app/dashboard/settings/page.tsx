@@ -1,4 +1,5 @@
 import PageHeader from "@/components/PageHeader";
+import SettingsForm from "@/components/ui/SettingsForm";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
 
@@ -10,6 +11,8 @@ const SettingsPage = (props: Props) => {
 			<PageHeader title='Settings' />
 
 			<Separator />
+
+			<SettingsForm />
 		</div>
 	);
 };
