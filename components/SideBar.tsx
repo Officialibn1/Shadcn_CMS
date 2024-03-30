@@ -6,6 +6,7 @@ import {
 	LayoutDashboard,
 	MailIcon,
 	Settings,
+	ShoppingBag,
 	ShoppingCart,
 	User,
 	UsersRound,
@@ -43,7 +44,7 @@ function SideBar({}: Props) {
 						title: "Dashboard",
 						label: "",
 						icon: LayoutDashboard,
-						variant: "default",
+						variant: "ghost",
 						href: "/dashboard",
 					},
 					{
@@ -54,11 +55,11 @@ function SideBar({}: Props) {
 						href: "/dashboard/customers",
 					},
 					{
-						title: "Mial",
+						title: "Orders",
 						label: "23",
-						icon: MailIcon,
+						icon: ShoppingBag,
 						variant: "ghost",
-						href: "/dashboard/mails",
+						href: "/dashboard/orders",
 					},
 					{
 						title: "Inventory",

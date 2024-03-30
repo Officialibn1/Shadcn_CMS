@@ -299,3 +299,119 @@ export const customers: Customer[] = [
 		spent: 5000.0, // Wholesale buyer with high spending amount
 	},
 ];
+
+export type Order = {
+	id: string;
+	name: string;
+	status: "Pending" | "Paid" | "Cancelled";
+	item_qty: number;
+	total: number; //Total cost of the order
+};
+
+export const orders: Order[] = [
+	{
+		id: "ORD001",
+		name: "Order for John Doe",
+		status: "Paid",
+		item_qty: 2,
+		total: 50.0,
+	},
+	{
+		id: "ORD002",
+		name: "Order for Jane Smith",
+		status: "Pending",
+		item_qty: 1,
+		total: 25.75,
+	},
+	{
+		id: "ORD003",
+		name: "Order for Mike Lee",
+		status: "Cancelled",
+		item_qty: 3,
+		total: 102.99,
+	},
+	{
+		id: "ORD004",
+		name: "Order for Alice Johnson",
+		status: "Paid",
+		item_qty: 4,
+		total: 180.5,
+	},
+	{
+		id: "ORD005",
+		name: "Order for David Williams",
+		status: "Pending",
+		item_qty: 1,
+		total: 19.99,
+	},
+	{
+		id: "ORD006",
+		name: "Order for Emily Garcia",
+		status: "Paid",
+		item_qty: 2,
+		total: 72.4,
+	},
+	{
+		id: "ORD007",
+		name: "Order for Charles Miller",
+		status: "Cancelled",
+		item_qty: 0, // Order cancelled with no items
+		total: 0.0,
+	},
+	{
+		id: "ORD008",
+		name: "Order for Brenda Hernandez",
+		status: "Paid",
+		item_qty: 5,
+		total: 215.3,
+	},
+	{
+		id: "ORD009",
+		name: "Order for Joseph Thomas",
+		status: "Pending",
+		item_qty: 3,
+		total: 148.0,
+	},
+	{
+		id: "ORD010",
+		name: "Order for Ashley Moore",
+		status: "Paid",
+		item_qty: 1,
+		total: 39.95,
+	},
+	{
+		id: "ORD011",
+		name: "Order for Big Box Retail",
+		status: "Paid",
+		item_qty: 20,
+		total: 850.25, // Large order with a high total
+	},
+	{
+		id: "ORD012",
+		name: "Order for Sarah Jones",
+		status: "Pending", // Technically not fully paid yet
+		item_qty: 1,
+		total: 12.99,
+	},
+	{
+		id: "ORD013",
+		name: "Order for Marie Dupont (France)",
+		status: "Paid",
+		item_qty: 2,
+		total: 42.0, // Order from an international customer
+	},
+	{
+		id: "ORD014",
+		name: "Rush Order for Daniel Robinson",
+		status: "Paid",
+		item_qty: 1,
+		total: 35.0, // Expedited order with a standard item price
+	},
+	{
+		id: "ORD015",
+		name: "Order for Christopher Lee",
+		status: "Paid",
+		item_qty: 3,
+		total: 78.43, // Order with a discounted total price
+	},
+];
