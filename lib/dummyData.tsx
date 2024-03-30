@@ -415,3 +415,119 @@ export const orders: Order[] = [
 		total: 78.43, // Order with a discounted total price
 	},
 ];
+
+export type Stock = {
+	id: string;
+	name: string;
+	status: "In Stock" | "Out of Stock";
+	item_qty: number;
+	price: number; //Total cost of the order
+};
+
+export const stock: Stock[] = [
+	{
+		id: "STC001",
+		name: "iPhone 15 Pro",
+		status: "In Stock",
+		item_qty: 9,
+		price: 50.0,
+	},
+	{
+		id: "STC002",
+		name: "iWatch Series 4",
+		status: "In Stock",
+		item_qty: 11,
+		price: 25.75,
+	},
+	{
+		id: "STC003",
+		name: "iPhone 12 Mini",
+		status: "Out of Stock",
+		item_qty: 0,
+		price: 102.99,
+	},
+	{
+		id: "STC004",
+		name: "IPad 10 Gen",
+		status: "In Stock",
+		item_qty: 41,
+		price: 180.5,
+	},
+	{
+		id: "STC005",
+		name: "Samsung FoldZ",
+		status: "In Stock",
+		item_qty: 19,
+		price: 19.99,
+	},
+	{
+		id: "STC006",
+		name: "iWatch Series 6",
+		status: "In Stock",
+		item_qty: 22,
+		price: 72.4,
+	},
+	{
+		id: "STC007",
+		name: "iPhone 13",
+		status: "Out of Stock",
+		item_qty: 0,
+		price: 20.0,
+	},
+	{
+		id: "STC008",
+		name: "iPhone 15 ProMax",
+		status: "In Stock",
+		item_qty: 15,
+		price: 215.3,
+	},
+	{
+		id: "STC009",
+		name: "Samsung s21 Ultra",
+		status: "Out of Stock",
+		item_qty: 0,
+		price: 148.0,
+	},
+	{
+		id: "STC010",
+		name: "Samsung s22",
+		status: "In Stock",
+		item_qty: 18,
+		price: 39.95,
+	},
+	{
+		id: "STC011",
+		name: "iPhone 13 ProMax",
+		status: "In Stock",
+		item_qty: 20,
+		price: 850.25,
+	},
+	{
+		id: "STC012",
+		name: "iWatch 2nd Gen",
+		status: "In Stock",
+		item_qty: 61,
+		price: 12.99,
+	},
+	{
+		id: "STC013",
+		name: "Samsung Fold",
+		status: "In Stock",
+		item_qty: 62,
+		price: 42.0,
+	},
+	{
+		id: "STC014",
+		name: "Airpods PRO",
+		status: "In Stock",
+		item_qty: 31,
+		price: 35.0,
+	},
+	{
+		id: "STC015",
+		name: "iPhone 14 PRO",
+		status: "In Stock",
+		item_qty: 39,
+		price: 78.43,
+	},
+];

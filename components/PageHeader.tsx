@@ -21,7 +21,7 @@ const PageHeader = ({ title, className }: Props) => {
 
 			<div className='flex flex-col gap-2 items-center'>
 				<Button
-					className='ml-auto'
+					className='ml-auto border'
 					variant={"ghost"}
 					size={"icon"}
 					onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
