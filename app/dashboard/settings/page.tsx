@@ -1,5 +1,5 @@
 import PageHeader from "@/components/PageHeader";
-import SettingsForm from "@/components/ui/SettingsForm";
+import SettingsForm from "@/components/SettingsForm";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
 

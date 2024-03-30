@@ -55,14 +55,15 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
-	bio: "I own a computer.",
+	bio: "I’m a Front-End developer with a keen eye and passion for designing interactive and engaging web interfaces. My proficiency lies in converting Figma designs, sketches and any type of mockups into fully functional and dynamic websites and web applications ensuring pixel perfect design (UI) and great user experience (UX) across all devices while adhering to performance best practices.",
 	urls: [
-		{ value: "https://shadcn.com" },
-		{ value: "http://twitter.com/shadcn" },
+		{ value: "https://www.linkedin.com/in/isah-muhammad-5046b125a/" },
+		{ value: "https://github.com/Officialibn1" },
+		{ value: "https://ibn.vzy.io" },
 	],
 };
 
-export function ProfileForm() {
+const ProfileForm = () => {
 	const form = useForm<ProfileFormValues>({
 		resolver: zodResolver(profileFormSchema),
 		defaultValues,
@@ -98,7 +99,8 @@ export function ProfileForm() {
 							<FormLabel>Username</FormLabel>
 							<FormControl>
 								<Input
-									placeholder='shadcn'
+									placeholder='Isah Ibn Muhammad'
+									disabled
 									{...field}
 								/>
 							</FormControl>
@@ -125,15 +127,18 @@ export function ProfileForm() {
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
-									<SelectItem value='m@example.com'>m@example.com</SelectItem>
-									<SelectItem value='m@google.com'>m@google.com</SelectItem>
-									<SelectItem value='m@support.com'>m@support.com</SelectItem>
+									<SelectItem value='officilibn001@gmail.com'>
+										officilibn001@gmail.com
+									</SelectItem>
+									<SelectItem value='fabulouselbin8598@gmail.com'>
+										fabulouselbin8598@gmail.com
+									</SelectItem>
+									<SelectItem value='ibnsautomation@gmail.com'>
+										ibnsautomation@gmail.com
+									</SelectItem>
 								</SelectContent>
 							</Select>
-							<FormDescription>
-								You can manage verified email addresses in your{" "}
-								<Link href='/examples/forms'>email settings</Link>.
-							</FormDescription>
+
 							<FormMessage />
 						</FormItem>
 					)}
@@ -146,15 +151,13 @@ export function ProfileForm() {
 							<FormLabel>Bio</FormLabel>
 							<FormControl>
 								<Textarea
-									placeholder='Tell us a little bit about yourself'
-									className='resize-none'
+									placeholder='About Me'
+									className='resize-auto min-h-36 lg:min-h-28'
+									disabled
 									{...field}
 								/>
 							</FormControl>
-							<FormDescription>
-								You can <span>@mention</span> other users and organizations to
-								link to them.
-							</FormDescription>
+
 							<FormMessage />
 						</FormItem>
 					)}
@@ -171,10 +174,14 @@ export function ProfileForm() {
 										URLs
 									</FormLabel>
 									<FormDescription className={cn(index !== 0 && "sr-only")}>
-										Add links to your website, blog, or social media profiles.
+										Here are links to my LinkedIn, GitHub and AI built portfolio
+										website.
 									</FormDescription>
 									<FormControl>
-										<Input {...field} />
+										<Input
+											disabled
+											{...field}
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -194,4 +201,6 @@ export function ProfileForm() {
 			</form>
 		</Form>
 	);
-}
+};
+
+export default ProfileForm;

@@ -1,4 +1,5 @@
 import PageHeader from "@/components/PageHeader";
+import ProfileForm from "@/components/ProfileForm";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
 
@@ -10,6 +11,10 @@ const ProfilePage = (props: Props) => {
 			<PageHeader title='My Profile' />
 
 			<Separator />
+
+			<div className='w-full  lg:w-[768px]'>
+				<ProfileForm />
+			</div>
 		</div>
 	);
 };
