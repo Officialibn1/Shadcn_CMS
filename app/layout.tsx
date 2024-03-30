@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import SideBar from "@/components/SideBar";
+import { Themeprovider } from "@/providers/theme_providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,12 @@ export default function RootLayout({
 				className={cn("outline min-h-screen", inter.className, {
 					"debug-screens": process.env.NODE_ENV === "development",
 				})}>
-				{children}
+				<Themeprovider
+					attribute='class'
+					defaultTheme='dark'
+					enableSystem>
+					{children}
+				</Themeprovider>
 			</body>
 		</html>
 	);
