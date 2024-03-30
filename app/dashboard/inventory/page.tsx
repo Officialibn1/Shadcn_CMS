@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/InventoryColumn";
 import InventoryTable from "@/components/ui/InventoryTable";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { orders, stock } from "@/lib/dummyData";
 import { useWindowWidth } from "@react-hook/window-size";
 import React from "react";
@@ -19,8 +20,9 @@ const InventoryPage = (props: Props) => {
 	return (
 		<div className='py-4 px-2 flex flex-col gap-5'>
 			<PageHeader title='Inventory/Stocks' />
+			<Separator />
 
-			<div className='flex flex-row justify-end mt-4 mb-2 '>
+			<div className='flex flex-row justify-end mb-2 '>
 				<Button
 					variant={"default"}
 					className='px-8'>
