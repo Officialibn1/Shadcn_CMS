@@ -1,18 +1,12 @@
 import React from "react";
 import { shimmer } from "./ui/Shrimmer";
 
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import { Skeleton as ShadCnSkeleton } from "@/components/ui/skeleton";
 
 export function CardSkeleton() {
 	return (
-		<div
-			className={`${shimmer} relative overflow-hidden rounded-xl bg-background w-full h-36  shadow`}>
-			<Skeleton
-				baseColor='#202020'
-				highlightColor='#444'
-				className='h-36 rounded-sm'
-			/>
+		<div className={`relative overflow-hidden rounded-xl w-full h-36  shadow`}>
+			<ShadCnSkeleton className='h-36 rounded-sm w-full' />
 		</div>
 	);
 }
@@ -31,12 +25,8 @@ export function CardsSkeleton() {
 export function DashboardBarChartSkeleton() {
 	return (
 		<div
-			className={`${shimmer} relative overflow-hidden rounded-xl bg-background w-full h-[400px] xl:h-[550px]  shadow`}>
-			<Skeleton
-				baseColor='#202020'
-				highlightColor='#444'
-				className='h-full w-full rounded-sm'
-			/>
+			className={`relative overflow-hidden rounded-xl bg-background w-full h-[400px] xl:h-[550px]  shadow`}>
+			<ShadCnSkeleton className='h-full w-full rounded-sm' />
 		</div>
 	);
 }
@@ -44,12 +34,8 @@ export function DashboardBarChartSkeleton() {
 export function DashboardOrdersSkeleton() {
 	return (
 		<div
-			className={`${shimmer} relative overflow-hidden rounded-xl bg-background w-full h-20   shadow`}>
-			<Skeleton
-				baseColor='#202020'
-				highlightColor='#444'
-				className='h-full w-full rounded-sm'
-			/>
+			className={`relative overflow-hidden rounded-xl bg-background w-full h-20   shadow`}>
+			<ShadCnSkeleton className='h-full w-full rounded-sm' />
 		</div>
 	);
 }
@@ -59,18 +45,10 @@ const DashboardSkeleton = () => {
 		<div>
 			<div className='flex justify-between h-16 items-center mb-10'>
 				<div className='lg:ml-2 w-36 h-10'>
-					<Skeleton
-						baseColor='#202020'
-						highlightColor='#444'
-						className='w-full h-10'
-					/>
+					<ShadCnSkeleton className='w-full h-10' />
 				</div>
 				<div className='w-10 h-10'>
-					<Skeleton
-						baseColor='#202020'
-						highlightColor='#444'
-						className='w-10 h-10 rounded-sm'
-					/>
+					<ShadCnSkeleton className='w-10 h-10 rounded-sm' />
 				</div>
 			</div>
 
@@ -82,18 +60,10 @@ const DashboardSkeleton = () => {
 				<div className='flex flex-col gap-3 border p-4 rounded-sm'>
 					<div className='flex flex-col justify-between gap-2 mb-3'>
 						<div className='w-52 h-10'>
-							<Skeleton
-								baseColor='#202020'
-								highlightColor='#444'
-								className='w-full h-8'
-							/>
+							<ShadCnSkeleton className='w-full h-8' />
 						</div>
 						<div className='w-72 h-6'>
-							<Skeleton
-								baseColor='#202020'
-								highlightColor='#444'
-								className='w-full h-full rounded-sm'
-							/>
+							<ShadCnSkeleton className='w-full h-full rounded-sm' />
 						</div>
 					</div>
 					<DashboardOrdersSkeleton />
