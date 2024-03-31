@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
 	ChevronLeft,
@@ -20,13 +20,22 @@ type Props = {};
 function SideBar({}: Props) {
 	const [isCollapsed, setisCollapsed] = useState(false);
 
-	const screenWidth = useWindowWidth();
+	const [isSmallScreenView, setisSmallScreenView] = useState(true);
 
-	const isSmallScreenView = screenWidth < 769;
+	const screenWidth = useWindowWidth();
 
 	const toggleNavbarCollapseState = () => {
 		setisCollapsed(!isCollapsed);
 	};
+
+	useEffect(() => {
+		if (screenWidth < 769) {
+			setisSmallScreenView(true);
+		} else {
+			setisSmallScreenView(false);
+		}
+	}, []);
+
 	return (
 		<div className='border border-l-3 px-2 py-5 pt-10 md:pt-24 min-h-screen relative'>
 			{!isSmallScreenView && (

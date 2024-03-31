@@ -1,7 +1,12 @@
+import DashboardSkeleton from "@/components/DashboardSkeleton";
 import React from "react";
 
 const DashboardLoading = () => {
-	return <div>DashboardLoading. . .</div>;
+	return (
+		<div>
+			<DashboardSkeleton />
+		</div>
+	);
 };
 
 export default DashboardLoading;
