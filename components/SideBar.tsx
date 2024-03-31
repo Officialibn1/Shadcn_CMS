@@ -20,13 +20,13 @@ type Props = {};
 function SideBar({}: Props) {
 	const [isCollapsed, setisCollapsed] = useState(false);
 
-	const [isSmallScreenView, setisSmallScreenView] = useState(true);
-
-	const screenWidth = useWindowWidth();
-
 	const toggleNavbarCollapseState = () => {
 		setisCollapsed(!isCollapsed);
 	};
+
+	const [isSmallScreenView, setisSmallScreenView] = useState(true);
+
+	const screenWidth = useWindowWidth();
 
 	useEffect(() => {
 		if (screenWidth < 769) {
