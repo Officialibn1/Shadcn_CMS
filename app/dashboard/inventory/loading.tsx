@@ -1,6 +1,7 @@
 import React from "react";
 import { Skeleton as ShadCnSkeleton } from "@/components/ui/skeleton";
 import { DashboardOrdersSkeleton } from "@/components/DashboardSkeleton";
+import { Separator } from "@/components/ui/separator";
 
 export function CustomerAndOrderPageTableColumnSkeleton() {
 	return (
@@ -21,6 +22,12 @@ const Loading = () => {
 				<div className='w-10 h-10'>
 					<ShadCnSkeleton className='w-10 h-10 rounded-sm' />
 				</div>
+			</div>
+
+			<Separator />
+
+			<div className='flex flex-row justify-end mb-5 mt-3 '>
+				<ShadCnSkeleton className='w-32 h-10' />
 			</div>
 
 			<div className='flex flex-col gap-3 border p-4 rounded-sm'>
