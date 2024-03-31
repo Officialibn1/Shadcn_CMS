@@ -3,10 +3,10 @@ import { Skeleton as ShadCnSkeleton } from "@/components/ui/skeleton";
 import { DashboardOrdersSkeleton } from "@/components/DashboardSkeleton";
 import { Separator } from "@/components/ui/separator";
 
-export function CustomerAndOrderPageTableColumnSkeleton() {
+export function ProfileInputSkeleton() {
 	return (
 		<div
-			className={`relative overflow-hidden rounded-xl bg-background w-full h-16   shadow`}>
+			className={`relative overflow-hidden rounded-xl bg-background w-full h-10 my-1  shadow`}>
 			<ShadCnSkeleton className='h-full w-full rounded-sm' />
 		</div>
 	);
@@ -29,20 +29,35 @@ const Loading = () => {
 			<div className='flex flex-col justify-between gap-4 mb-3 mt-5'>
 				<ShadCnSkeleton className='w-72 h-4 rounded-sm' />
 
-				<ShadCnSkeleton className='w-14 h-8' />
-				<ShadCnSkeleton className='w-14 h-8' />
+				<div
+					className={`relative overflow-hidden rounded-xl bg-background lg:w-[768px] mt-1 w-full h-10 my-1  shadow`}>
+					<ShadCnSkeleton className='h-full w-full rounded-sm' />
+				</div>
 
 				<ShadCnSkeleton className='w-60 h-4 rounded-sm' />
+
+				<div
+					className={`relative overflow-hidden rounded-xl bg-background lg:w-[768px] mt-1 w-full h-10 my-1  shadow`}>
+					<ShadCnSkeleton className='h-full w-full rounded-sm' />
+				</div>
 				<ShadCnSkeleton className='w-60 h-4 rounded-sm' />
 
 				<ShadCnSkeleton className='w-40 h-8' />
 			</div>
+			<ShadCnSkeleton className='w-14 my-2 h-8' />
 
-			<div className='flex flex-col gap-3 border p-4 rounded-sm'>
-				<CustomerAndOrderPageTableColumnSkeleton />
-				<CustomerAndOrderPageTableColumnSkeleton />
-				<CustomerAndOrderPageTableColumnSkeleton />
-				<CustomerAndOrderPageTableColumnSkeleton />
+			<div
+				className={`relative overflow-hidden rounded-xl bg-background lg:w-[768px] mt-1 w-full h-40 lg:h-20 my-1  shadow`}>
+				<ShadCnSkeleton className='h-full w-full rounded-sm' />
+			</div>
+
+			<div className='flex flex-col gap-2 mt-8  rounded-sm lg:w-[768px]'>
+				<ShadCnSkeleton className='w-14 h-8' />
+
+				<ShadCnSkeleton className='w-60 h-4 rounded-sm' />
+				<ProfileInputSkeleton />
+				<ProfileInputSkeleton />
+				<ProfileInputSkeleton />
 			</div>
 
 			<ShadCnSkeleton className='w-52 mb-3 mt-5 h-6 rounded-sm' />

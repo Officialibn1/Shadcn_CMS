@@ -32,11 +32,11 @@ const Loading = () => {
 
 			<div className='flex flex-col gap-3 border p-4 rounded-sm'>
 				<div className='flex justify-between gap-2 mb-3'>
-					<ShadCnSkeleton className='w-24 h-7 rounded-sm' />
-					<ShadCnSkeleton className='w-28 h-7 rounded-sm' />
-					<ShadCnSkeleton className='w-28 h-7 rounded-sm' />
-					<ShadCnSkeleton className='w-52 h-7 rounded-sm' />
-					<ShadCnSkeleton className='w-32 h-7 rounded-sm' />
+					<ShadCnSkeleton className='opacity-0 md:opacity-100 w-24 h-7 rounded-sm' />
+					<ShadCnSkeleton className='w-16 md:w-28 h-7 rounded-sm' />
+					<ShadCnSkeleton className='w-16 md:w-28 h-7 rounded-sm' />
+					<ShadCnSkeleton className='w-52 hidden lg:flex h-7 rounded-sm' />
+					<ShadCnSkeleton className='w-32 hidden lg:flex h-7 rounded-sm' />
 				</div>
 
 				<CustomerAndOrderPageTableColumnSkeleton />
