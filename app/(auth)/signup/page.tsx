@@ -4,13 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import SignUpForm from "@/components/SignupForm";
 
 import React from "react";
 import Lottie from "lottie-react";
 
 import AuthAnimation1 from "@/lottiefiles/AuthAnimation1.json";
+
+import { useTheme } from "next-themes";
+import { Moon, Sun } from "lucide-react";
 
 import AuthAnimation2 from "@/lottiefiles/AuthAnimation2.json";
 
@@ -22,9 +25,22 @@ import AuthAnimation2 from "@/lottiefiles/AuthAnimation2.json";
 type Props = {};
 
 const SignUpPage = (props: Props) => {
+	const { theme, setTheme } = useTheme();
 	return (
 		<div className='outline w-full flex min-h-screen place-items-center '>
 			<div className='border container relative h-[600px] w-[80%] rounded-md shadow-lg flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 overflow-hidden'>
+				<div className='absolute left-0 top-4 md:top-8 md:left-4 lg:left-1/2  pl-6'>
+					<Button
+						className='ml-auto border'
+						variant={"ghost"}
+						size={"icon"}
+						onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+						<Moon className='w-6 h-6 absolute rotate-90 scale-0 dark:rotate-0 dark:scale-100 transition-all' />
+
+						<Sun className='w-6 h-6 absolute rotate-0 scale-100 dark:rotate-90 dark:scale-0 transition-all' />
+					</Button>
+				</div>
+
 				<Link
 					href='/'
 					className={cn(

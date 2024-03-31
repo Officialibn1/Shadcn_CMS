@@ -93,7 +93,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
 						<Tooltip delayDuration={0}>
 							<TooltipTrigger asChild>
 								<Link
-									href='#'
+									href='/'
 									className={cn(
 										buttonVariants({ variant: "destructive", size: "icon" }),
 										"h-9 w-9 mt-80",
@@ -112,7 +112,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
 						</Tooltip>
 					) : (
 						<Link
-							href='#'
+							href='/'
 							className={cn(
 								"my-2 mt-80",
 								buttonVariants({ variant: "destructive", size: "default" }),
