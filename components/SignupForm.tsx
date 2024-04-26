@@ -11,12 +11,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	Form,
 	FormControl,
+	FormDescription,
 	FormField,
 	FormItem,
-	FormLabel,
 	FormMessage,
 } from "./ui/form";
+
+import {
+	InputOTP,
+	InputOTPGroup,
+	InputOTPSlot,
+} from "@/components/ui/input-otp";
+
 import { toast } from "./ui/use-toast";
+import { Label } from "./ui/label";
+import { useRouter } from "next/navigation";
+import { useSignUp } from "@clerk/nextjs";
 
 const signUpFormSchema = z.object({
 	firstName: z
@@ -48,6 +58,12 @@ const signUpFormSchema = z.object({
 		),
 });
 
+const OTPSchema = z.object({
+	pin: z.string().min(6, {
+		message: "Your one-time password must be 6 characters.",
+	}),
+});
+
 type SignUpFormValues = z.infer<typeof signUpFormSchema>;
 
 const defaultSignUpFormValues: Partial<SignUpFormValues> = {
@@ -60,7 +76,13 @@ const defaultSignUpFormValues: Partial<SignUpFormValues> = {
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const SignUpForm = () => {
+	const { isLoaded, signUp, setActive } = useSignUp();
+
 	const [isLoading, setIsLoading] = useState(false);
+
+	const [pendingVerification, setPendingVerification] = useState(false);
+
+	const router = useRouter();
 
 	const form = useForm<SignUpFormValues>({
 		resolver: zodResolver(signUpFormSchema),
@@ -68,185 +90,214 @@ const SignUpForm = () => {
 		mode: "onChange",
 	});
 
+	const otpForm = useForm<z.infer<typeof OTPSchema>>({
+		resolver: zodResolver(OTPSchema),
+		defaultValues: {
+			pin: "",
+		},
+	});
+
 	async function onSubmit(data: SignUpFormValues) {
 		setIsLoading(true);
-		toast({
-			title: "You submitted the following values:",
-			description: (
-				<pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-					<code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-				</pre>
-			),
-		});
-		setTimeout(() => {
+
+		if (!isLoaded) {
+			toast({
+				title: `An error was encountered`,
+				// @ts-ignore
+				description: `There could be an issue with the network`,
+				variant: "destructive",
+			});
+
 			setIsLoading(false);
-		}, 3000);
+
+			return;
+		}
+
+		try {
+			await signUp.create({
+				firstName: data.firstName,
+				lastName: data.lastName,
+				emailAddress: data.email,
+				password: data.password,
+			});
+
+			await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+
+			toast({
+				title: `An OTP email have been sent to ${data.email}`,
+			});
+
+			setPendingVerification(true);
+
+			setIsLoading(false);
+		} catch (error) {
+			// @ts-ignore
+			if (error.status === 422) {
+				toast({
+					title: `This email address have already been taken.`,
+
+					variant: "destructive",
+				});
+			} else {
+				toast({
+					title: `A network/server error was encountered`,
+					// @ts-ignore
+					description: `${error.message}`,
+					variant: "destructive",
+				});
+			}
+
+			setIsLoading(false);
+		}
+
+		setIsLoading(false);
 	}
 
-	return (
-		<div className={cn("grid gap-6")}>
-			{/* <form onSubmit={onSubmit}>
-				<div className='grid gap-2'>
-					<div className='grid gap-1'>
-						<Label
-							className='sr-only'
-							htmlFor='email'>
-							First Name
-						</Label>
-						<Input
-							id='name'
-							placeholder='Enter Name'
-							type='text'
-							autoCorrect='off'
-							disabled={isLoading}
+	async function onVerify(data: z.infer<typeof OTPSchema>) {
+		setIsLoading(true);
+
+		if (!isLoaded) {
+			setIsLoading(false);
+
+			return;
+		}
+
+		try {
+			const res = await signUp.attemptEmailAddressVerification({
+				code: data.pin,
+			});
+
+			console.log({
+				code: data.pin,
+				message: "OTP Ran",
+			});
+
+			if (res.status === "complete") {
+				toast({
+					title: `OTP verification successfull`,
+				});
+				await setActive({ session: res.createdSessionId });
+
+				router.push("/dashboard");
+			}
+
+			if (res.status !== "complete") {
+				toast({
+					title: `An error was encountered`,
+					// @ts-ignore
+					description: `${JSON.stringify(res, null, 2)}`,
+					variant: "destructive",
+				});
+
+				setPendingVerification(false);
+			}
+
+			setIsLoading(false);
+		} catch (error) {
+			toast({
+				title: `There was an error while verifying OTP`,
+				// @ts-ignore
+				description: `${error.message}`,
+				variant: "destructive",
+			});
+		}
+
+		setIsLoading(false);
+	}
+
+	if (!pendingVerification) {
+		return (
+			<div className={cn("grid gap-6")}>
+				<Form {...form}>
+					<form onSubmit={form.handleSubmit(onSubmit)}>
+						<FormField
+							control={form.control}
+							name='firstName'
+							render={({ field }) => (
+								<FormItem>
+									<Label className='font-light'>First Name</Label>
+									<FormControl>
+										<Input
+											placeholder='Enter First Name'
+											{...field}
+											onChange={field.onChange}
+											defaultValue={field.value}
+										/>
+									</FormControl>
+
+									<FormMessage />
+								</FormItem>
+							)}
 						/>
-					</div>
+						<FormField
+							control={form.control}
+							name='lastName'
+							render={({ field }) => (
+								<FormItem>
+									<Label className='font-light'>Last Name</Label>
+									<FormControl>
+										<Input
+											placeholder='Enter Last Name'
+											{...field}
+											onChange={field.onChange}
+											defaultValue={field.value}
+										/>
+									</FormControl>
 
-					<div className='grid gap-1'>
-						<Label
-							className='sr-only'
-							htmlFor='email'>
-							Last Name
-						</Label>
-						<Input
-							id='name'
-							placeholder='Enter Name'
-							type='text'
-							autoCorrect='off'
-							disabled={isLoading}
+									<FormMessage />
+								</FormItem>
+							)}
 						/>
-					</div>
+						<FormField
+							control={form.control}
+							name='email'
+							render={({ field }) => (
+								<FormItem>
+									<Label className='font-light'>Email</Label>
+									<FormControl>
+										<Input
+											placeholder='Enter Valid Email'
+											{...field}
+											onChange={field.onChange}
+											defaultValue={field.value}
+										/>
+									</FormControl>
 
-					<div className='grid gap-1'>
-						<Label
-							className='sr-only'
-							htmlFor='email'>
-							Email
-						</Label>
-						<Input
-							id='email'
-							placeholder='name@example.com'
-							type='email'
-							autoCapitalize='none'
-							autoComplete='email'
-							autoCorrect='off'
-							disabled={isLoading}
+									<FormMessage />
+								</FormItem>
+							)}
 						/>
-					</div>
+						<FormField
+							control={form.control}
+							name='password'
+							render={({ field }) => (
+								<FormItem>
+									<Label className='font-light'>Password</Label>
+									<FormControl>
+										<Input
+											placeholder='Enter password at least 8 characters'
+											{...field}
+											onChange={field.onChange}
+											defaultValue={field.value}
+										/>
+									</FormControl>
 
-					<div className='grid gap-1'>
-						<Label
-							className='sr-only'
-							htmlFor='email'>
-							Password
-						</Label>
-						<Input
-							id='password'
-							placeholder='&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;'
-							type='password'
-							autoCapitalize='none'
-							autoCorrect='off'
-							disabled={isLoading}
+									<FormMessage />
+								</FormItem>
+							)}
 						/>
-					</div>
-					<Button disabled={isLoading}>
-						{isLoading && (
-							<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
-						)}
-						SignUp with Email
-					</Button>
-				</div>
-			</form> */}
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)}>
-					<FormField
-						control={form.control}
-						name='firstName'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel className='font-light'>First Name</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Enter First Name'
-										{...field}
-										onChange={field.onChange}
-										defaultValue={field.value}
-									/>
-								</FormControl>
 
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='lastName'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel className='font-light'>Last Name</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Enter Last Name'
-										{...field}
-										onChange={field.onChange}
-										defaultValue={field.value}
-									/>
-								</FormControl>
-
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='email'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel className='font-light'>Email</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Enter Valid Email'
-										{...field}
-										onChange={field.onChange}
-										defaultValue={field.value}
-									/>
-								</FormControl>
-
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='password'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel className='font-light'>Password</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Enter password at least 8 characters'
-										{...field}
-										onChange={field.onChange}
-										defaultValue={field.value}
-									/>
-								</FormControl>
-
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<Button
-						className='w-full mt-3'
-						disabled={isLoading}>
-						{isLoading && (
-							<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
-						)}
-						SignUp with Email
-					</Button>
-				</form>
-			</Form>
-			{/* <div className='relative'>
+						<Button
+							className='w-full mt-3'
+							disabled={isLoading}>
+							{isLoading && (
+								<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+							)}
+							SignUp with Email
+						</Button>
+					</form>
+				</Form>
+				{/* <div className='relative'>
 				<div className='absolute inset-0 flex items-center'>
 					<span className='w-full border-t' />
 				</div>
@@ -256,7 +307,7 @@ const SignUpForm = () => {
 					</span>
 				</div>
 			</div> */}
-			{/* <Button
+				{/* <Button
 				variant='outline'
 				type='button'
 				disabled={isLoading}>
@@ -267,7 +318,49 @@ const SignUpForm = () => {
 				)}{" "}
 				GitHub
 			</Button> */}
-		</div>
+			</div>
+		);
+	}
+
+	return (
+		<Form {...otpForm}>
+			<form onSubmit={otpForm.handleSubmit(onVerify)}>
+				<FormField
+					control={otpForm.control}
+					name='pin'
+					render={({ field }) => (
+						<FormItem className=' flex flex-col items-center '>
+							<Label className='font-light text-center'>Enter OTP</Label>
+							<FormControl>
+								<InputOTP
+									maxLength={6}
+									{...field}>
+									<InputOTPGroup>
+										<InputOTPSlot index={0} />
+										<InputOTPSlot index={1} />
+										<InputOTPSlot index={2} />
+										<InputOTPSlot index={3} />
+										<InputOTPSlot index={4} />
+										<InputOTPSlot index={5} />
+									</InputOTPGroup>
+								</InputOTP>
+							</FormControl>
+							<FormDescription>
+								Please enter the one-time password sent to your email.
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				<Button
+					className='w-full mt-3'
+					disabled={isLoading}>
+					{isLoading && <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />}
+					Verify
+				</Button>
+			</form>
+		</Form>
 	);
 };
 

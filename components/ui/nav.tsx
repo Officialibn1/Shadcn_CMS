@@ -4,7 +4,7 @@ import Link from "next/link";
 import { LogOut, LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
 	Tooltip,
 	TooltipContent,
@@ -12,6 +12,7 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
 
 interface NavProps {
 	isCollapsed: boolean;
@@ -26,6 +27,8 @@ interface NavProps {
 
 export function Nav({ links, isCollapsed }: NavProps) {
 	const pathName = usePathname();
+
+	const { signOut } = useAuth();
 
 	return (
 		<TooltipProvider>
@@ -92,8 +95,8 @@ export function Nav({ links, isCollapsed }: NavProps) {
 					{isCollapsed ? (
 						<Tooltip delayDuration={0}>
 							<TooltipTrigger asChild>
-								<Link
-									href='/'
+								<Button
+									onClick={() => signOut()}
 									className={cn(
 										buttonVariants({ variant: "destructive", size: "icon" }),
 										"h-9 w-9 mt-80",
@@ -102,7 +105,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
 									)}>
 									<LogOut className='h-4 w-4' />
 									<span className='sr-only'>{"Logout"}</span>
-								</Link>
+								</Button>
 							</TooltipTrigger>
 							<TooltipContent
 								side='right'
@@ -111,8 +114,8 @@ export function Nav({ links, isCollapsed }: NavProps) {
 							</TooltipContent>
 						</Tooltip>
 					) : (
-						<Link
-							href='/'
+						<Button
+							onClick={() => signOut()}
 							className={cn(
 								"my-2 mt-80",
 								buttonVariants({ variant: "destructive", size: "default" }),
@@ -122,7 +125,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
 							)}>
 							<LogOut className='mr-2 h-4 w-4' />
 							<span className='text-base font-light'>{"LogOut"}</span>
-						</Link>
+						</Button>
 					)}
 				</nav>
 			</div>
