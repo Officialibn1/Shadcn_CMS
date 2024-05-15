@@ -73,8 +73,6 @@ const defaultSignUpFormValues: Partial<SignUpFormValues> = {
 	password: "",
 };
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
-
 const SignUpForm = () => {
 	const { isLoaded, signUp, setActive } = useSignUp();
 
@@ -277,6 +275,7 @@ const SignUpForm = () => {
 										<Input
 											placeholder='Enter password at least 8 characters'
 											{...field}
+											name='password'
 											onChange={field.onChange}
 											defaultValue={field.value}
 										/>

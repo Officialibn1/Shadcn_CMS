@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import SideBar from "@/components/SideBar";
 import { Themeprovider } from "@/providers/theme_providers";
 import { Toaster } from "@/components/ui/toaster";
+import { dark } from "@clerk/themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,10 @@ export default function RootLayout({
 				className={cn("outline min-h-screen", inter.className, {
 					"debug-screens": process.env.NODE_ENV === "development",
 				})}>
-				<ClerkProvider>
+				<ClerkProvider
+					appearance={{
+						baseTheme: dark,
+					}}>
 					<Themeprovider
 						attribute='class'
 						defaultTheme='dark'

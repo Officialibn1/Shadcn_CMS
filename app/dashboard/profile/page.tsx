@@ -1,6 +1,7 @@
 import PageHeader from "@/components/PageHeader";
 import ProfileForm from "@/components/ProfileForm";
 import { Separator } from "@/components/ui/separator";
+import { UserProfile } from "@clerk/nextjs";
 import React from "react";
 
 type Props = {};
@@ -12,13 +13,14 @@ const ProfilePage = async (props: Props) => {
 		}, 2000);
 	});
 	return (
-		<div className='py-4 px-2 flex flex-col gap-5'>
+		<div className='py-4 px-2 flex flex-col gap-5 '>
 			<PageHeader title='My Profile' />
 
 			<Separator />
 
-			<div className='w-full  lg:w-[768px]'>
-				<ProfileForm />
+			<div className='w-[70vw] sm:w-[80vw] md:w-[83vw] lg:w-auto  overflow-x-scroll '>
+				{/* <ProfileForm /> */}
+				<UserProfile routing='hash' />
 			</div>
 		</div>
 	);

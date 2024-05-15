@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { UserButton } from "@clerk/nextjs";
 
 type Props = {
 	title: string;
@@ -19,7 +20,7 @@ const PageHeader = ({ title, className }: Props) => {
 				{title}
 			</h1>
 
-			<div className='flex flex-col gap-2 items-center'>
+			<div className='flex flex-row gap-2 items-center'>
 				<Button
 					className='ml-auto border'
 					variant={"ghost"}
@@ -28,6 +29,13 @@ const PageHeader = ({ title, className }: Props) => {
 					<Moon className='w-8 h-8 absolute rotate-90 scale-0 dark:rotate-0 dark:scale-100 transition-all' />
 
 					<Sun className='w-8 h-8 absolute rotate-0 scale-100 dark:rotate-90 dark:scale-0 transition-all' />
+				</Button>
+
+				<Button
+					className='ml-auto border'
+					variant={"ghost"}
+					size={"icon"}>
+					<UserButton />
 				</Button>
 			</div>
 		</div>

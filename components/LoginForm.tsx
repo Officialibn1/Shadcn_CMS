@@ -6,88 +6,182 @@ import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { z } from "zod";
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+	Form,
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormMessage,
+} from "./ui/form";
+import { useSignIn, SignInButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { toast } from "./ui/use-toast";
 
-const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
+const signInFormSchema = z.object({
+	email: z.string().email("Enter a valid email address."),
+	password: z
+		.string()
+		.min(8, "Password must be at least 8 characters long")
+		.regex(/[a-z]/, "Password must contain at least one lowercase letter")
+		.regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+		.regex(/\d/, "Password must contain at least one digit")
+		.regex(
+			/[!@#$%^&*(),.?":{}|<>]/,
+			"Password must contain at least one special character",
+		),
+});
+
+type SignInFormValues = z.infer<typeof signInFormSchema>;
+
+const defaultSignInFormValues: Partial<SignInFormValues> = {
+	email: "",
+	password: "",
+};
+
+const LoginForm = () => {
+	const { isLoaded, signIn, setActive } = useSignIn();
+
 	const [isLoading, setIsLoading] = useState(false);
 
-	async function onSubmit(event: React.SyntheticEvent) {
-		event.preventDefault();
+	const router = useRouter();
+
+	const form = useForm<SignInFormValues>({
+		resolver: zodResolver(signInFormSchema),
+		defaultValues: defaultSignInFormValues,
+		mode: "onChange",
+	});
+
+	async function onSubmit(data: SignInFormValues) {
 		setIsLoading(true);
 
-		setTimeout(() => {
+		console.log("Crerk Ready", isLoading);
+
+		if (!isLoaded) {
+			toast({
+				title: `An error was encountered`,
+				// @ts-ignore
+				description: `The Login Server have not loaded`,
+				variant: "destructive",
+			});
+
 			setIsLoading(false);
-		}, 3000);
+
+			return;
+		}
+
+		try {
+			console.log({
+				// strategy: "password",
+				identifier: data.email,
+				password: data.password,
+			});
+
+			const signInAttempt = await signIn.create({
+				identifier: data.email,
+				password: data.password,
+			});
+
+			console.log(signInAttempt);
+
+			if (signInAttempt.status === "complete") {
+				await setActive({ session: signInAttempt.createdSessionId });
+
+				toast({
+					title: `Login Successful`,
+				});
+
+				router.push("/dashboard");
+			} else {
+				console.log(JSON.stringify(signInAttempt, null, 2));
+			}
+
+			setIsLoading(false);
+		} catch (error) {
+			// @ts-ignore
+			if (error.status === 422) {
+				toast({
+					title: `Invalid Credentials.`,
+
+					variant: "destructive",
+				});
+			} else {
+				// @ts-ignore
+				console.log(error.message);
+
+				toast({
+					title: `A network/server error was encountered`,
+					// @ts-ignore
+					description: `${error.message}`,
+					variant: "destructive",
+				});
+			}
+
+			setIsLoading(false);
+		}
+
+		setIsLoading(false);
 	}
 
 	return (
-		<div
-			className={cn("grid gap-6", className)}
-			{...props}>
-			<form onSubmit={onSubmit}>
-				<div className='grid gap-2'>
-					<div className='grid gap-1'>
-						<Label
-							className='sr-only'
-							htmlFor='email'>
-							Email
-						</Label>
-						<Input
-							id='email'
-							placeholder='name@example.com'
-							type='email'
-							autoCapitalize='none'
-							autoComplete='email'
-							autoCorrect='off'
-							disabled={isLoading}
-						/>
-					</div>
+		<div className={cn("grid gap-6")}>
+			<Form {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)}>
+					<FormField
+						control={form.control}
+						name='email'
+						render={({ field }) => (
+							<FormItem>
+								<Label className='font-light'>Email</Label>
+								<FormControl>
+									<Input
+										placeholder='Enter Valid Email'
+										{...field}
+										onChange={field.onChange}
+										defaultValue={field.value}
+									/>
+								</FormControl>
 
-					<div className='grid gap-1'>
-						<Label
-							className='sr-only'
-							htmlFor='email'>
-							Password
-						</Label>
-						<Input
-							id='password'
-							placeholder='&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;'
-							type='password'
-							autoCapitalize='none'
-							autoCorrect='off'
-							disabled={isLoading}
-						/>
-					</div>
-					<Button disabled={isLoading}>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='password'
+						render={({ field }) => (
+							<FormItem>
+								<Label className='font-light'>Password</Label>
+								<FormControl>
+									<Input
+										placeholder='Enter password at least 8 characters'
+										{...field}
+										type='password'
+										onChange={field.onChange}
+										defaultValue={field.value}
+									/>
+								</FormControl>
+								{/* jhqjwh%#^12HJ */}
+
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					<Button
+						className='w-full mt-3'
+						disabled={isLoading}>
 						{isLoading && (
 							<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
 						)}
-						LogIn with Email
+						SignIn with Email
 					</Button>
-				</div>
-			</form>
-			<div className='relative'>
-				<div className='absolute inset-0 flex items-center'>
-					<span className='w-full border-t' />
-				</div>
-				<div className='relative flex justify-center text-xs uppercase'>
-					<span className='bg-background px-2 text-muted-foreground'>
-						Or continue with
-					</span>
-				</div>
-			</div>
-			<Button
-				variant='outline'
-				type='button'
-				disabled={isLoading}>
-				{isLoading ? (
-					<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
-				) : (
-					<Icons.gitHub className='mr-2 h-4 w-4' />
-				)}{" "}
-				GitHub
-			</Button>
+				</form>
+			</Form>
 		</div>
 	);
 };

@@ -15,6 +15,7 @@ import AuthAnimation1 from "@/lottiefiles/AuthAnimation1.json";
 import AuthAnimation2 from "@/lottiefiles/AuthAnimation2.json";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
+import { SignIn, SignInButton } from "@clerk/nextjs";
 
 // export const metadata: Metadata = {
 // 	title: "LogIn",
@@ -50,13 +51,16 @@ const LoginPage = (props: Props) => {
 					Sign Up
 				</Link>
 
+				{/* <SignInButton>
+					<Button>clerk signin</Button>
+				</SignInButton> */}
+
 				<div className='relative hidden   h-[600px] w-full aspect-square items-center justify-center bg-primary/15 p-10 lg:flex dark:border-r'>
 					<Lottie
 						className='w-70% aspect-square'
 						animationData={AuthAnimation2}
 						loop={true}
 					/>
-					;
 				</div>
 				<div className='lg:p-8 mt-28 md:mt-0'>
 					<div className='mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]'>
@@ -70,6 +74,8 @@ const LoginPage = (props: Props) => {
 						</div>
 
 						<LoginForm />
+
+						{/* <SignIn routing='hash' /> */}
 					</div>
 				</div>
 			</div>
